@@ -1,0 +1,2 @@
+-setting up the project 
+-> create a react app

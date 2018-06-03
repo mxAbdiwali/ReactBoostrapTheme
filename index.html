@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ReactStrap</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <!--  -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <!--//*this.changePage('about') call the function
+  you need to bind to the object*// -->
+  <script type="text/babel">
+  
+    class Navbar extends React.Component {
+
+      changePage = function(page){
+        this.setState({currentPage:page}, () => {
+          console.log(this.props);
+        });
+      }
+  
+      render(){
+        return(
+          <nav className="navbar navbar-default">
+            <div className="container">
+              <div className="navbar-header">
+                <a className="navbar-brand" href="#">{this.props.brand}</a>
+              </div>
+              <div className="navbar">
+               <ul className="nav navbar-nav">
+                <li className={(this.props.currentPage === 'home' ? 'active' : '')} ><a href="#" onClick={this.changePage.bind(this,'home')}>Home</a></li>
+                <li className={(this.props.currentPage === 'about' ? 'active' : '')} ><a href="#" onClick={this.changePage.bind(this,'about')}>About</a></li>
+                <li className={(this.props.currentPage === 'contact' ? 'active' : '')} ><a href="#" onClick={this.changePage.bind(this,'contact')}>Contact</a></li>
+               </ul>
+              </div>
+            </div>    
+          </nav>
+        );
+      };
+     
+    }
+
+    class Jumbotron extends React.Component {
+      render(){
+        return(
+          <div className="jumbotron">
+            <h1 className="display-4">{this.props.heading}</h1>
+            <p className="lead">{this.props.text}</p>
+            <hr className="my-4"></hr>
+            <p className="lead text-center">
+              <a className="btn btn-primary btn-lg" href="#" >Learn more</a>
+            </p>
+          </div>
+        );
+      } 
+    }
+
+    class Page extends React.Component {
+
+      render(){
+        return(
+          <div className="container">
+            <h2>{this.props.currentPage.charAt(0).toUpperCase() + this.props.currentPage.slice(1)}</h2>
+            <blockquote className="blockquote text-center">
+              <p className="">This is the <mark>{this.props.currentPage}</mark> page</p>
+              <footer className="blockquote-footer">Someone famous in <strong author="Source Title">Web development</strong></footer>
+            </blockquote>
+          </div>
+        );
+      }
+     
+    }
+
+    class Theme extends React.Component {
+      constructor(props){
+        super(props);
+        this.state = {
+          currentPage : 'home'
+        }
+        
+      }
+      render(){
+        return(
+          <div>
+           <Navbar currentPage={this.state.currentPage} />
+           <Jumbotron heading="Hello World!" text="It uses utility classNamees for typography and spacing to space content out within the larger container" />
+           <Page currentPage={this.state.currentPage}/>
+          </div>
+        );
+      } 
+    }
+
+    
+    Navbar.defaultProps = {
+         brand: 'ReactStrap'
+    }
+
+    ReactDOM.render(
+      <div>
+        <Theme />
+      </div>,
+      document.getElementById('root'));
+    </script>
+</body>
+
+</html>
